@@ -1,0 +1,46 @@
+# Dockerfile (multi-stage) pra .NET 8
+
+# Ideia:
+# 1) Usar a imagem SDK só pra compilar/publicar (mais pesada)
+# 2) Copiar o resultado pra imagem Runtime (mais leve e + seguro) e rodar
+
+# Passo a passo:
+# - Copia só os .csproj primeiro (pra aproveitar cache do Docker)
+# - Roda restore (baixa dependências)
+# - Copia o resto do código
+# - Roda publish (gera arquivos finais)
+# - Monta a imagem final só com o publish
+# - Sobe a API na porta 8080
+
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copia só os projetos primeiro (melhora cache do restore)
+COPY src/CatalogoLivros.Dominio/CatalogoLivros.Dominio.csproj src/CatalogoLivros.Dominio/
+COPY src/CatalogoLivros.Aplicacao/CatalogoLivros.Aplicacao.csproj src/CatalogoLivros.Aplicacao/
+COPY src/CatalogoLivros.Infraestrutura/CatalogoLivros.Infraestrutura.csproj src/CatalogoLivros.Infraestrutura/
+COPY src/CatalogoLivros.Api/CatalogoLivros.Api.csproj src/CatalogoLivros.Api/
+
+# Baixa dependências NuGet
+RUN dotnet restore src/CatalogoLivros.Api/CatalogoLivros.Api.csproj
+
+# Copia todo o resto do código
+COPY . .
+
+# Publica em Release e joga o resultado em /app/publish
+RUN dotnet publish src/CatalogoLivros.Api/CatalogoLivros.Api.csproj -c Release -o /app/publish /p:UseAppHost=false
+
+# Imagem final (só runtime, menor e pra produção)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+
+# Pega só o que foi publicado na etapa "build"
+COPY --from=build /app/publish .
+
+# A API vai escutar em 8080
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+# Comando que roda quando o container inicia
+ENTRYPOINT ["dotnet", "CatalogoLivros.Api.dll"]
