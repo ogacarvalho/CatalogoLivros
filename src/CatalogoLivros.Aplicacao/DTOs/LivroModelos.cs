@@ -1,6 +1,6 @@
 namespace CatalogoLivros.Aplicacao.DTOs;
 
-public sealed record LivroDto(Guid Id, string Titulo, string Autor, int AnoLancamento);
+public sealed record LivroDto(Guid Id, string Titulo, string Autor, int AnoLancamento, string? UrlCapa);
 
 public sealed class CriarLivroRequest
 {

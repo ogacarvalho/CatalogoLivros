@@ -7,10 +7,12 @@ namespace CatalogoLivros.Aplicacao.Services;
 public sealed class ServicoLivro : IServicoLivro
 {
     private readonly ILivroRepositorio _repositorio;
+    private readonly IArmazenamentoArquivo _armazenamento;
 
-    public ServicoLivro(ILivroRepositorio repositorio)
+    public ServicoLivro(ILivroRepositorio repositorio, IArmazenamentoArquivo armazenamento)
     {
         _repositorio = repositorio;
+        _armazenamento = armazenamento;
     }
 
     public async Task<IReadOnlyCollection<LivroDto>> BuscarTodosAsync()
@@ -70,7 +72,7 @@ public sealed class ServicoLivro : IServicoLivro
     }
 
     private static LivroDto Mapear(Livro livro) =>
-        new(livro.Id, livro.Titulo, livro.Autor, livro.AnoLancamento);
+        new(livro.Id, livro.Titulo, livro.Autor, livro.AnoLancamento, livro.UrlCapa);
 
     private static void Validar(string titulo, string autor, int anoLancamento)
     {
@@ -89,5 +91,20 @@ public sealed class ServicoLivro : IServicoLivro
         {
             throw new ArgumentException($"Ano de lancamento invalido. Use entre 1450 e {anoAtual}.");
         }
+    }
+
+    public async Task<LivroDto?> EnviarCapaAsync(Guid idLivro, Stream arquivo, string nomeArquivo, string contentType)
+    {
+        var livro = await _repositorio.BuscarPorIdAsync(idLivro);
+        if (livro is null)
+        {
+            return null;
+        }
+    
+        var url = await _armazenamento.EnviarAsync(arquivo, nomeArquivo, contentType);
+        livro.AtualizarCapa(url);
+        await _repositorio.SalvarAlteracoesAsync();
+    
+        return Mapear(livro);
     }
 }

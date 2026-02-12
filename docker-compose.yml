@@ -25,6 +25,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=catalogo_livros;Username=postgres;Password=postgres
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      Storage__S3__BucketName: ${Storage__S3__BucketName}
     ports:
       - "8080:8080"
     depends_on:

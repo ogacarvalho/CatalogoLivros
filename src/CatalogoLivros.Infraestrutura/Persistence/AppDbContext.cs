@@ -33,6 +33,10 @@ public sealed class AppDbContext : DbContext
             builder.Property(l => l.AnoLancamento)
                 .HasColumnName("ano_lancamento")
                 .IsRequired();
+
+            builder.Property(l => l.UrlCapa)
+                .HasColumnName("url_capa")
+                .HasMaxLength(2048);
         });
     }
 }

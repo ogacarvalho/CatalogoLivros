@@ -13,7 +13,8 @@ public class ServicoLivroTests
     public async Task CriarAsync_DeveCriarLivro_QuandoDadosValidos()
     {
         var repositorio = new RepositorioLivroEmMemoria();
-        var servico = new ServicoLivro(repositorio);
+        var armazenamento = new ArmazenamentoArquivoFake();
+        var servico = new ServicoLivro(repositorio, armazenamento);
 
         var request = new CriarLivroRequest
         {
@@ -34,7 +35,8 @@ public class ServicoLivroTests
     public async Task AtualizarParcialAsync_DeveAtualizarApenasOCampoInformado()
     {
         var repositorio = new RepositorioLivroEmMemoria();
-        var servico = new ServicoLivro(repositorio);
+        var armazenamento = new ArmazenamentoArquivoFake();
+        var servico = new ServicoLivro(repositorio, armazenamento);
 
         var criado = await servico.CriarAsync(new CriarLivroRequest
         {
@@ -55,7 +57,8 @@ public class ServicoLivroTests
     public async Task RemoverAsync_DeveRetornarFalse_QuandoNaoExistirLivro()
     {
         var repositorio = new RepositorioLivroEmMemoria();
-        var servico = new ServicoLivro(repositorio);
+        var armazenamento = new ArmazenamentoArquivoFake();
+        var servico = new ServicoLivro(repositorio, armazenamento);
 
         var removido = await servico.RemoverAsync(Guid.NewGuid());
 
@@ -90,6 +93,14 @@ public class ServicoLivroTests
         public Task SalvarAlteracoesAsync()
         {
             return Task.CompletedTask;
+        }
+    }
+
+    private sealed class ArmazenamentoArquivoFake : IArmazenamentoArquivo
+    {
+        public Task<string> EnviarAsync(Stream arquivo, string nomeArquivo, string contentType)
+        {
+            return Task.FromResult("http://localhost:8080/capas/fake.jpg");
         }
     }
 }

@@ -9,4 +9,5 @@ public interface IServicoLivro
     Task<LivroDto> CriarAsync(CriarLivroRequest request);
     Task<LivroDto?> AtualizarParcialAsync(Guid id, AtualizarLivroRequest request);
     Task<bool> RemoverAsync(Guid id);
+    Task<LivroDto?> EnviarCapaAsync(Guid idLivro, Stream arquivo, string nomeArquivo, string contentType);
 }

@@ -3,8 +3,17 @@ using CatalogoLivros.Aplicacao.Services;
 using CatalogoLivros.Infraestrutura.Persistence;
 using CatalogoLivros.Infraestrutura.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Amazon.S3;
+using CatalogoLivros.Infraestrutura.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var bucket = builder.Configuration["Storage:S3:BucketName"]
+    ?? throw new InvalidOperationException("Storage:S3:BucketName nao configurado.");
+
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddScoped<IArmazenamentoArquivo>(_ =>
+    new ArmazenamentoS3(_.GetRequiredService<IAmazonS3>(), bucket));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' nao foi encontrada.");
