@@ -6,6 +6,7 @@ public class Livro
     public string Titulo { get; private set; }
     public string Autor { get; private set; }
     public int AnoLancamento { get; private set; }
+    public string? UrlCapa { get; private set; }
 
     private Livro()
     {
@@ -26,5 +27,10 @@ public class Livro
         Titulo = titulo.Trim();
         Autor = autor.Trim();
         AnoLancamento = anoLancamento;
+    }
+
+    public void AtualizarCapa(string? urlCapa)
+    {
+        UrlCapa = urlCapa;
     }
 }
