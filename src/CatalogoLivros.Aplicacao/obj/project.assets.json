@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "CatalogoLivros.Dominio/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CatalogoLivros.Dominio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CatalogoLivros.Dominio.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CatalogoLivros.Dominio/1.0.0": {
+      "type": "project",
+      "path": "../CatalogoLivros.Dominio/CatalogoLivros.Dominio.csproj",
+      "msbuildProject": "../CatalogoLivros.Dominio/CatalogoLivros.Dominio.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "CatalogoLivros.Dominio >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/home/gabriel/.nuget/packages/": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/CatalogoLivros.Dominio.csproj": {
+              "projectPath": "/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/CatalogoLivros.Dominio.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "DTWQkpUol3cq2EwQeS3VpgoZQrh2tMkV1xZrwxVqiiIebuQNHG8CBHcjVZt2nNrh+tSPsWKXx2eMPmIUlgJXzw==",
+  "dgSpecHash": "WyMA/1pM5M8ihJr+FFXqOnLbi63cWBurWCr1O7qrOHF3ePe/t+wgrGTw7CKJJCDBNIsysSlCVmYm49VMdY/7tA==",
   "success": true,
   "projectFilePath": "/home/gabriel/Documentos/CatalogoLivros/tests/CatalogoLivros.Aplicacao.Tests/CatalogoLivros.Aplicacao.Tests.csproj",
   "expectedPackageFiles": [
-    "/home/gabriel/.nuget/packages/coverlet.collector/6.0.0/coverlet.collector.6.0.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/fluentassertions/6.12.0/fluentassertions.6.12.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.codecoverage/17.10.0/microsoft.codecoverage.17.10.0.nupkg.sha512",
     "/home/gabriel/.nuget/packages/microsoft.net.test.sdk/17.10.0/microsoft.net.test.sdk.17.10.0.nupkg.sha512",

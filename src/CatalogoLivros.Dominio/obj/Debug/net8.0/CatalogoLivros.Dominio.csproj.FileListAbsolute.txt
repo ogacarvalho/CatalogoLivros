@@ -1,0 +1,12 @@
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/bin/Debug/net8.0/CatalogoLivros.Dominio.deps.json
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/bin/Debug/net8.0/CatalogoLivros.Dominio.dll
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/bin/Debug/net8.0/CatalogoLivros.Dominio.pdb
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.GeneratedMSBuildEditorConfig.editorconfig
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.AssemblyInfoInputs.cache
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.AssemblyInfo.cs
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.csproj.CoreCompileInputs.cache
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.sourcelink.json
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.dll
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/refint/CatalogoLivros.Dominio.dll
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/CatalogoLivros.Dominio.pdb
+/home/gabriel/Documentos/CatalogoLivros/src/CatalogoLivros.Dominio/obj/Debug/net8.0/ref/CatalogoLivros.Dominio.dll
