@@ -1,25 +1,34 @@
+using CatalogoLivros.Aplicacao.Abstractions;
+using CatalogoLivros.Aplicacao.Services;
+using CatalogoLivros.Infraestrutura.Persistence;
+using CatalogoLivros.Infraestrutura.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' nao foi encontrada.");
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<ILivroRepositorio, RepositorioLivro>();
+builder.Services.AddScoped<IServicoLivro, ServicoLivro>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+using (var scope = app.Services.CreateScope())
+{
+    var contexto = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    contexto.Database.EnsureCreated();
+}
 
 app.MapControllers();
-
 app.Run();
