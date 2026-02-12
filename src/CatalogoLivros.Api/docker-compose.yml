@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: catalogo-postgres
+    environment:
+      POSTGRES_DB: catalogo_livros
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: src/CatalogoLivros.Api/Dockerfile
+    container_name: catalogo-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=catalogo_livros;Username=postgres;Password=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
