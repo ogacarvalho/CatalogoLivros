@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/CatalogoLivros.Api.props" />
-</Project>
