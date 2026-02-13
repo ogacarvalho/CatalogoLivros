@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var contexto = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    contexto.Database.EnsureCreated();
+    contexto.Database.Migrate();
 }
 
 app.MapControllers();
