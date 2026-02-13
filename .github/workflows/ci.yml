@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore CatalogoLivros.sln
+
+      - name: Build
+        run: dotnet build CatalogoLivros.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test CatalogoLivros.sln --configuration Release --no-build --verbosity minimal
+
+      - name: Build Docker image
+        run: docker build -f src/CatalogoLivros.Api/Dockerfile -t catalogolivros-api:ci .
