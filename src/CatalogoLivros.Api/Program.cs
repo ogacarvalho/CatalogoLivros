@@ -43,6 +43,7 @@ builder.Services.AddControllers()
             });
         };
     });
+builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -55,6 +56,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -63,4 +65,5 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 app.Run();
