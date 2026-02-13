@@ -1,5 +1,6 @@
 using CatalogoLivros.Aplicacao.Abstractions;
 using CatalogoLivros.Aplicacao.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogoLivros.Api.Controllers;
@@ -36,6 +37,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Criar(CriarLivroRequest request)
     {
         var livro = await _servico.CriarAsync(request);
@@ -43,6 +45,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpPatch("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> Atualizar(Guid id, AtualizarLivroRequest request)
     {
         var livro = await _servico.AtualizarParcialAsync(id, request);
@@ -55,6 +58,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> Excluir(Guid id)
     {
         var removido = await _servico.RemoverAsync(id);
@@ -67,6 +71,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpPost("{id:guid}/capa")]
+    [Authorize]
     public async Task<IActionResult> EnviarCapa(Guid id, IFormFile arquivo)
     {
         if (arquivo is null || arquivo.Length == 0)
