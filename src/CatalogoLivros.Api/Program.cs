@@ -2,6 +2,7 @@ using CatalogoLivros.Aplicacao.Abstractions;
 using CatalogoLivros.Aplicacao.Services;
 using CatalogoLivros.Infraestrutura.Persistence;
 using CatalogoLivros.Infraestrutura.Repositories;
+using CatalogoLivros.Api.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
 using CatalogoLivros.Infraestrutura.Storage;
@@ -52,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {

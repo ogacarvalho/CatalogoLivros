@@ -38,34 +38,20 @@ public class LivrosController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Criar(CriarLivroRequest request)
     {
-        try
-        {
-            var livro = await _servico.CriarAsync(request);
-            return CreatedAtAction(nameof(ObterPorId), new { id = livro.Id }, livro);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { mensagem = ex.Message });
-        }
+        var livro = await _servico.CriarAsync(request);
+        return CreatedAtAction(nameof(ObterPorId), new { id = livro.Id }, livro);
     }
 
     [HttpPatch("{id:guid}")]
     public async Task<IActionResult> Atualizar(Guid id, AtualizarLivroRequest request)
     {
-        try
+        var livro = await _servico.AtualizarParcialAsync(id, request);
+        if (livro is null)
         {
-            var livro = await _servico.AtualizarParcialAsync(id, request);
-            if (livro is null)
-            {
-                return NotFound(new { mensagem = "Livro nao encontrado." });
-            }
+            return NotFound(new { mensagem = "Livro nao encontrado." });
+        }
 
-            return Ok(livro);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { mensagem = ex.Message });
-        }
+        return Ok(livro);
     }
 
     [HttpDelete("{id:guid}")]
