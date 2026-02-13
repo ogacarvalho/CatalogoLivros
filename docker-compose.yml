@@ -29,6 +29,9 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
       Storage__S3__BucketName: ${Storage__S3__BucketName}
+      Jwt__Issuer: ${Jwt__Issuer}
+      Jwt__Audience: ${Jwt__Audience}
+      Jwt__Key: ${Jwt__Key}
     ports:
       - "8080:8080"
     depends_on:
