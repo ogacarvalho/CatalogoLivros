@@ -18,6 +18,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> Listar()
     {
         var livros = await _servico.BuscarTodosAsync();
@@ -25,6 +26,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> ObterPorId(Guid id)
     {
         var livro = await _servico.BuscarPorIdAsync(id);
