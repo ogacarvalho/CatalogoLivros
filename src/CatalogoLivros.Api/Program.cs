@@ -5,6 +5,7 @@ using CatalogoLivros.Infraestrutura.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
 using CatalogoLivros.Infraestrutura.Storage;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,26 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddScoped<ILivroRepositorio, RepositorioLivro>();
 builder.Services.AddScoped<IServicoLivro, ServicoLivro>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var erros = context.ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    x => x.Key,
+                    x => x.Value!.Errors
+                        .Select(e => string.IsNullOrWhiteSpace(e.ErrorMessage) ? "Valor invalido." : e.ErrorMessage)
+                        .ToArray());
+
+            return new BadRequestObjectResult(new
+            {
+                mensagem = "Dados invalidos.",
+                erros
+            });
+        };
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
